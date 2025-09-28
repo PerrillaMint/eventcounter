@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Event Counter</string>
+    <string name="settings">Settings</string>
+    <string name="show_my_counts">Show My Counts</string>
+    <string name="total_count">Total Count: %1$d</string>
+    <string name="button1_hint">Counter 1 Name</string>
+    <string name="button2_hint">Counter 2 Name</string>
+    <string name="button3_hint">Counter 3 Name</string>
+    <string name="max_events_hint">Max count goes here</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="toggle_event_name">Toggle Event names</string>
+    <string name="error_empty_field">Field cannot be empty</string>
+    <string name="error_invalid_max_events">Max events must be between 5 and 200</string>
+    <string name="event_a">Event A</string>
+    <string name="event_b">Event B</string>
+    <string name="event_c">Event C</string>
+</resources>
