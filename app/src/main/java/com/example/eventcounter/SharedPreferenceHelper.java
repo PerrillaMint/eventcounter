@@ -31,20 +31,29 @@ public class SharedPreferenceHelper {
     }
 
     public Settings getSettings() {
-        String button1Name = sharedPreferences.getString(KEY_BUTTON1_NAME, null);
-        String button2Name = sharedPreferences.getString(KEY_BUTTON2_NAME, null);
-        String button3Name = sharedPreferences.getString(KEY_BUTTON3_NAME, null);
+        String button1Name = sharedPreferences.getString(KEY_BUTTON1_NAME, "");
+        String button2Name = sharedPreferences.getString(KEY_BUTTON2_NAME, "");
+        String button3Name = sharedPreferences.getString(KEY_BUTTON3_NAME, "");
         int maxEvents = sharedPreferences.getInt(KEY_MAX_EVENTS, 100);
 
         return new Settings(button1Name, button2Name, button3Name, maxEvents);
     }
 
     public boolean hasSettings() {
-        return sharedPreferences.getString(KEY_BUTTON1_NAME, null) != null;
+        return sharedPreferences.getString(KEY_BUTTON1_NAME, null) != null &&
+                !sharedPreferences.getString(KEY_BUTTON1_NAME, "").isEmpty();
     }
 
     // Counter methods
-    public void incrementCounter(int buttonNumber) {
+    public boolean incrementCounter(int buttonNumber) {
+        int totalCount = getTotalCount();
+        int maxEvents = getSettings().getMaxEvents();
+
+        // Check if we've reached the maximum number of events
+        if (totalCount >= maxEvents) {
+            return false; // Maximum reached, cannot increment
+        }
+
         String key = getCounterKey(buttonNumber);
         int currentCount = sharedPreferences.getInt(key, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -59,6 +68,7 @@ public class SharedPreferenceHelper {
         editor.putString(KEY_EVENT_HISTORY, history);
 
         editor.apply();
+        return true; // Successfully incremented
     }
 
     public int getCounter(int buttonNumber) {
@@ -72,6 +82,21 @@ public class SharedPreferenceHelper {
 
     public String getEventHistory() {
         return sharedPreferences.getString(KEY_EVENT_HISTORY, "");
+    }
+
+    public int getRemainingEvents() {
+        int maxEvents = getSettings().getMaxEvents();
+        int totalCount = getTotalCount();
+        return Math.max(0, maxEvents - totalCount);
+    }
+
+    public void resetAllCounters() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_BUTTON1_COUNT, 0);
+        editor.putInt(KEY_BUTTON2_COUNT, 0);
+        editor.putInt(KEY_BUTTON3_COUNT, 0);
+        editor.putString(KEY_EVENT_HISTORY, "");
+        editor.apply();
     }
 
     private String getCounterKey(int buttonNumber) {

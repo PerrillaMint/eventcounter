@@ -6,7 +6,9 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,9 @@ public class DataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 
         // Setup action bar with up navigation
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         sharedPreferenceHelper = new SharedPreferenceHelper(this);
         settings = sharedPreferenceHelper.getSettings();
@@ -93,7 +97,7 @@ public class DataActivity extends AppCompatActivity {
                 default: return "Unknown Event";
             }
         } else {
-            return "Counter " + eventNumber;
+            return String.valueOf(eventNumber);
         }
     }
 

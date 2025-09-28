@@ -70,6 +70,8 @@
 
                     <TextView
                         style="@style/SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="Event Counters"
                         android:drawableStart="@drawable/ic_touch_app"
                         android:drawablePadding="12dp"

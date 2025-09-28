@@ -82,25 +82,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addRippleEffect(int buttonNumber) {
-        View container = null;
+        // Make container final by assigning it once
+        final View container;
         switch (buttonNumber) {
-            case 1: container = btnEvent1Container; break;
-            case 2: container = btnEvent2Container; break;
-            case 3: container = btnEvent3Container; break;
+            case 1:
+                container = btnEvent1Container;
+                break;
+            case 2:
+                container = btnEvent2Container;
+                break;
+            case 3:
+                container = btnEvent3Container;
+                break;
+            default:
+                return; // Exit early if invalid button number
         }
 
-        if (container != null) {
-            container.animate()
-                    .scaleX(0.95f)
-                    .scaleY(0.95f)
-                    .setDuration(100)
-                    .withEndAction(() -> {
-                        container.animate()
-                                .scaleX(1.0f)
-                                .scaleY(1.0f)
-                                .setDuration(100);
-                    });
-        }
+        // Now container is effectively final and can be used in lambda
+        container.animate()
+                .scaleX(0.95f)
+                .scaleY(0.95f)
+                .setDuration(100)
+                .withEndAction(() -> {
+                    container.animate()
+                            .scaleX(1.0f)
+                            .scaleY(1.0f)
+                            .setDuration(100);
+                });
     }
 
     private void updateUI() {
